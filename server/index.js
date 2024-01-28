@@ -35,6 +35,7 @@ app.post("/register", async (req, res) => {
       username,
       password: bcrypt.hashSync(password, salt),
     });
+    
     res.json(userdoc);
   } catch (e) {
     console.log(e);
@@ -58,23 +59,28 @@ app.post("/login", async (req, res) => {
             {},
             (err, token) => {
               if (err) throw err;
-              res.cookie("token", token).json({
+            
+              res.cookie("token", token, {
+              }).json({
                 id: user._id,
                 username: data.username,
               });
             }
           );
         } else {
+          res.status(400);
           res.json({
-            message: "Wrong Credentials",
+            message: "Wrong ",
           });
         }
       } else {
+        res.status(400);
         res.json({
           message: "User Not Found",
         });
       }
     } else {
+      res.status(400);
       res.json({
         message: "Empty data field",
       });
@@ -101,18 +107,24 @@ app.get("/profile", (req, res) => {
   });
   
   app.get("/getTodoList", async (req, res) => {
-        res.json(
-          await TodoModel.find()
-            .populate("author", ["username"])
-            .sort({ createdAt: -1 })
-            .limit(20)
-        );
+    const token=req.cookies;
+    if(token){
+    
+      res.json(
+        await TodoModel.find()
+          .populate("author", ["username"])
+          .sort({ createdAt: -1 })
+          .limit(20)
+      );
+    }
+      
       
 }); 
   
 // Add new task to the database 
 app.post("/addTodoList", async (req, res) => { 
   const { token } = req.cookies;
+  console.log(token);
   if(token){
     
       jwt.verify(token,secret,{},async(err,info)=>{
