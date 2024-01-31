@@ -1,11 +1,12 @@
 const express=require('express');
+const cors=require('cors');
 const mongoose=require('mongoose');
 const UserModel=require('./models/user');
 const TodoModel=require('./models/todo');
 const bcrypt=require('bcrypt');
 const jwt = require("jsonwebtoken");
 const cookieparser = require("cookie-parser");
-const cors=require('cors');
+
 const PORT=process.env.PORT || 4000;
 const app=express();
 const connectionstring="mongodb+srv://ash242242:w1FysDuchP4el2Ga@cluster0.xs8hlf6.mongodb.net/?retryWrites=true&w=majority";
@@ -21,7 +22,16 @@ app.listen(PORT,()=>{
 //     origin: 'http://192.168.0.109:3000', // Allow requests from this origin
 //     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 //   }));
-  app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+
+  app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+  
+// const corsOptions ={
+//    origin:'http://localhost:3000/', 
+//    credentials:true,            //access-control-allow-credentials:true
+//    optionSuccessStatus:200,
+// }
+
+// app.use(cors(corsOptions))
   app.use(express.json());
 app.use(cookieparser());
 
