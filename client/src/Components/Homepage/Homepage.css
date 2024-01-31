@@ -1,0 +1,23 @@
+
+  .row-1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff3cd;
+    margin-bottom: 8px;
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+  .pie{
+    
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100%;
+  }
+  .btnadd{
+    display: flex;
+    margin:8px auto;
+    justify-content: space-between;
+    align-items: center;
+  }
